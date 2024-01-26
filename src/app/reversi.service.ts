@@ -5,23 +5,16 @@ import { initialGameState, tryPlay } from './data/reversi.game';
 @Injectable({
   providedIn: 'root'
 })
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html'
-})
-
 export class ReversiService implements ReversiModelInterface {
-  constructor() { }
   private readonly _sigGameState = signal<GameState>(initialGameState) ;
   public readonly sigGameState = computed<GameState>(
-    () => {
-      return this._sigGameState() ;
-    }
+    () => this._sigGameState()
   );
 
   play(coord: TileCoords): void {
-    tryPlay(this._sigGameState(),coord[0],coord[1]) ;
+    this._sigGameState.set(
+      tryPlay(this.sigGameState(), coord[0], coord[1])
+    )
   }
 
   restart(): void {

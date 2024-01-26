@@ -1,4 +1,12 @@
 <h1>Reversi en Angular</h1>
-<pre>
-    {{ BoardtoString(sigGameState().board) }}
-</pre>
+<pre>{{
+    strBoard()
+}}</pre>
+
+<ul>
+    <li *ngFor="let coup of coupsPossibles()">
+        <button (click)="playAt(coup)">
+            {{coup | json}}
+        </button>
+    </li>
+</ul>
