@@ -18,8 +18,18 @@ export interface GameState {                              // Un état de jeu
     readonly turn: Turn;                                  // Le joueur pour qui c'est le tour de jouer
 }
 
+export interface GameStateAll {
+  readonly gameState: GameState;
+  readonly listPlayable: readonly TileCoords[];
+  readonly isPlayable: Matrix<boolean, 8, 8>;
+  readonly scores: Readonly<{ Player1: number, Player2: number }>;
+  readonly boardString: string;
+  readonly winner: undefined | "Drawn" | Turn;
+}
+
 export interface ReversiModelInterface {                  // Le modèle du jeu Reversi, au sens MVP/MVC
     readonly sigGameState: Signal<GameState>              // Un signal de l'état courant du jeu
+    readonly sigGameStateAll: Signal<GameStateAll>
     play(coord: TileCoords): void;                        // Joueur courant joue en <i, j>
     restart(): void;                                      // Redémarre une partie à l'état initiale
 }
